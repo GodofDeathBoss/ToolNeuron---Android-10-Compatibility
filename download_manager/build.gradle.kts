@@ -20,7 +20,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags("-std=c++17", "-fstack-protector-strong")
-                abiFilters += setOf("arm64-v8a", "x86_64")
+                abiFilters += setOf("arm64-v8a", "armeabi-v7a", "x86_64")
             }
         }
     }

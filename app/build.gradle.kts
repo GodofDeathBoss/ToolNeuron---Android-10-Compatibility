@@ -29,14 +29,15 @@ android {
 
     defaultConfig {
         applicationId = "com.dark.tool_neuron"
-        minSdk = 31
+        minSdk = 29  // Android 10 — supports ForegroundService and modern APIs
         targetSdk = 37
         versionCode = (rootProject.findProperty("tn.versionCode") as String).toInt()
         versionName = rootProject.findProperty("tn.versionName") as String
         ndk {
             // arm64-v8a — all modern Android phones and NPU-capable devices
+            // armeabi-v7a — older ARM devices and Samsung Note 9
             // x86_64    — emulator support during development
-            abiFilters += listOf("arm64-v8a", "x86_64")
+            abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64")
         }
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
