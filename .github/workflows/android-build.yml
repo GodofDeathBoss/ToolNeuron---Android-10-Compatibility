@@ -27,16 +27,23 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
       
-      - name: Install CMake
+      - name: Download and Install CMake 3.31.4
         run: |
-          sudo apt-get update
-          sudo apt-get install -y cmake
+          mkdir -p /tmp/cmake
+          cd /tmp/cmake
+          wget https://github.com/Kitware/CMake/releases/download/v3.31.4/cmake-3.31.4-linux-x86_64.tar.gz
+          tar -xzf cmake-3.31.4-linux-x86_64.tar.gz
+          sudo mv cmake-3.31.4-linux-x86_64 /opt/cmake
+          sudo ln -sf /opt/cmake/bin/cmake /usr/local/bin/cmake
+          cmake --version
       
       - name: Grant execute permission to gradlew
         run: chmod +x gradlew
       
       - name: Build debug APK
         run: ./gradlew assembleDebug --no-daemon
+        env:
+          CMAKE_PREFIX_PATH: /opt/cmake
       
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
